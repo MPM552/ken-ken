@@ -8,8 +8,8 @@ let gameState = createEmptyState();
 function createEmptyState() {
   return {
     size: DEFAULT_SIZE,
-    difficulty: easy,
-    soltuion: [],
+    difficulty: 'easy',
+    solution: [],
     cages: [],
     board: [],
     notes: [],
@@ -27,12 +27,16 @@ export function getGameState() {
   return gameState;
 }
 
+export function getState() {
+  return gameState;
+}
+
 export function newGame(difficulty, size) {
   stopTimer();
   if (difficulty) gameState.difficulty = difficulty;
   if (size) gameState.size = size;
   const gridSize = gameState.size;
-  const { solution, cages } = generarePuzzle(gridSize, difficulty);
+  const { solution, cages } = generarePuzzle(gridSize, gameState.difficulty);
 
   gameState.solution = solution;
   gameState.cages = cages;
@@ -162,7 +166,7 @@ export function checkWin() {
 
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
-        if (board[i][j] === 0) return false;
+      if (board[i][j] === 0) return false;
     }
   }
 
@@ -184,25 +188,27 @@ export function checkWin() {
 }
 
 function checkCageValues(values, operation, target) {
-    if (operation === null) {
-        return values[0] === target;
-    }
-    switch (operation) {
-        case '+':
-            return values.reduce((a, b) => a + b, 0) === target;
-        case '-':
-            const min = Math.min(...values);
-            const max = Math.max(...values);
-            return max - min === target;
-        case '*':
-            return values.reduce((a, b) => a * b, 1) === target;
-        case '/':
-            const max = Math.max(...values);
-            const min = Math.min(...values);
-            return min !== 0 && max / min === target;
-        default:
-            return false;
-    }
+  if (operation === null) {
+    return values[0] === target;
+  }
+  switch (operation) {
+  case '+':
+    return values.reduce((a, b) => a + b, 0) === target;
+  case '-': {
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    return max - min === target;
+  }
+  case '*':
+    return values.reduce((a, b) => a * b, 1) === target;
+  case '/': {
+    const maxVal = Math.max(...values);
+    const minVal = Math.min(...values);
+    return minVal !== 0 && maxVal / minVal === target;
+  }
+  default:
+    return false;
+  }
 }
 
 let timerCallback = null;
@@ -212,22 +218,22 @@ export function setTimerCallback(callback) {
 }
 
 export function startTimer() {
-    if (gameState.timerRunning) return;
-    gameState.timerRunning = true;
-    gameState.timerInterval = setInterval(() => {
-        gameState.timer++;
-        if (timerCallback) {
-            timerCallback(gameState.timer);
-        }
-    }, TIMER_INTERVAL_MS);
+  if (gameState.timerRunning) return;
+  gameState.timerRunning = true;
+  gameState.timerInterval = setInterval(() => {
+    gameState.timer++;
+    if (timerCallback) {
+      timerCallback(gameState.timer);
+    }
+  }, TIMER_INTERVAL_MS);
 }
 
 function stopTimer() {
-    if (gameState.timerRunning) {
-        clearInterval(gameState.timerInterval);
-        gameState.timerInterval = null;
-    }
-    gameState.timerRunning = false;
+  if (gameState.timerRunning) {
+    clearInterval(gameState.timerInterval);
+    gameState.timerInterval = null;
+  }
+  gameState.timerRunning = false;
 }
 
 export function getCageForCell(row, col) {
