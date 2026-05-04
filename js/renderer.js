@@ -29,9 +29,9 @@ export function renderGrid () {
   const label = document.createElement('span');
   label.className = 'cage-label';
   if (cage.cells.length === 1) {
-    label.textContent = `${cage.value}`;
+    label.textContent = `${cage.target}`;
   } else {
-    label.textContent = `${cage.value}${OPERATION_DISPLAY[cage.operation]}`;
+    label.textContent = `${cage.target}${OPERATION_DISPLAY[cage.operation]}`;
   }
   cell.appendChild(label);
     }
@@ -74,9 +74,11 @@ function updateCellDisplay(row, col) {
 
   if (value !== 0) {
   numEl.textContent = value;
+  numEl.style.display = '';
   notesEl.style.display = 'none';
   } else if (notes && notes.length > 0) {
-  notesEl.style.display = 'none';
+  numEl.style.display = 'none';
+  notesEl.style.display = '';
   notesEl.innerHTML = '';
   for (let i = 1; i <= notes.length; i++) {
     const noteElement = document.createElement('span');
@@ -86,7 +88,7 @@ function updateCellDisplay(row, col) {
   }
   } else {
   numEl.textContent = '';
-  numEl.style.display = 'none';
+  numEl.style.display = '';
   notesEl.style.display = 'none';
   }
 }
@@ -95,7 +97,7 @@ export function updateHighlights() {
   const state = getState();
   const allCells = document.querySelectorAll('.cell');
   allCells.forEach(cell => {
-  cell.classList.remove('cell-selected', 'cell-highlighted', 'cell-error');
+  cell.classList.remove('cell-selected', 'cell-highlight', 'cell-error');
   });
   if (!state.selectedCell) return;
 
@@ -115,10 +117,11 @@ export function updateHighlights() {
 
   const dupes = findDuplicates(row, col);
   if (dupes.length > 0) {
+    selectedEl.classList.add('cell-error');
     for (const dupe of dupes) {
   const el = getCellElement(dupe.row, dupe.col);
   if (el) {
-    el.classList.remove('cell-highlighted');
+    el.classList.remove('cell-highlight');
     el.classList.add('cell-error');
   }
     }
@@ -144,12 +147,12 @@ export function updateNotesButton(isActive) {
 export function showCelebration() {
   const state = getState();
   const overlay = document.getElementById('celebration');
-  if(!overlay) return;
+  if (!overlay) return;
 
   const timeEl = overlay.querySelector('.celebration-time');
   if (timeEl) {
-  const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
-  const secs = String(seconds % 60).padStart(2, '0');
+  const mins = String(Math.floor(state.timer / 60)).padStart(2, '0');
+  const secs = String(state.timer % 60).padStart(2, '0');
   timeEl.textContent = `Time: ${mins}:${secs}`;
   }
   overlay.classList.add('visible');
@@ -167,7 +170,7 @@ function getCellElement(row, col) {
 }
 
 function buildCageLookup(state) {
-  const lookup = Array.from({ length: state.size }, () => Array(state.size).fill(null));
+  const lookup = Array.from({ length: state.size }, () => new Array(state.size).fill(null));
   for (const cage of state.cages) {
   for (const cell of cage.cells) {
     lookup[cell.row][cell.col] = cage;
@@ -180,16 +183,16 @@ function applyBoarders(cellEl, row, col, cage, cageLookup, size) {
   const cageId = cage.id;
 
   if (row === 0 || cageLookup[row - 1][col].id !== cage) {
-  cellEl.classList.add = 'border-top';
+  cellEl.classList.add('border-top');
   }
   if (row === size - 1 || cageLookup[row + 1][col].id !== cage) {
-  cellEl.classList.add = 'border-bottom';
+  cellEl.classList.add('border-bottom');
   }
   if (col === 0 || cageLookup[row][col - 1].id !== cage) {
-  cellEl.classList.add = 'border-left';
+  cellEl.classList.add('border-left');
   }
   if (col === size - 1 || cageLookup[row][col + 1].id !== cage) {
-  cellEl.classList.add = 'border-right';
+  cellEl.classList.add('border-right');
   }
 }
 

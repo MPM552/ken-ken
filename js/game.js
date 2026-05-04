@@ -168,12 +168,12 @@ export function checkWin() {
   const { size, board, solution } = gameState;
 
   for (let i = 0; i < size; i++) {
-  for (let j = 0; j < size; j++) {
-    if (board[i][j] === 0) return false;
-  }
+    for (let j = 0; j < size; j++) {
+      if (board[i][j] === 0) return false;
+    }
   }
 
-  for ( let r = 0; r < size; r++) {
+  for (let r = 0; r < size; r++) {
   const seen = new Set();
   for (let c = 0; c < size; c++) {
     if (seen.has(board[r][c])) return false;
@@ -238,7 +238,7 @@ export function startTimer() {
 }
 
 function stopTimer() {
-  if (gameState.timerRunning) {
+  if (gameState.timerInterval) {
   clearInterval(gameState.timerInterval);
   gameState.timerInterval = null;
   }
@@ -247,9 +247,11 @@ function stopTimer() {
 
 export function getCageForCell(row, col) {
   for (const cage of gameState.cages) {
-  if (cage.cells.some((c) => c.row === row && c.col === col)) {
-    return cage;
-  }
+    for (const cell of cage.cells) {
+      if (cell.row === row && cell.col === col) {
+        return cage;
+      }
+    }
   }
   return null;
 }

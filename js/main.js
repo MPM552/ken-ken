@@ -26,6 +26,13 @@ function wireEvents() {
 
   document.addEventListener('keydown', handleKeyDown);
 
+  document.querySelectorAll('.number-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const num = parseInt(btn.dataset.number, 10);
+      handleNumberInput(num);
+    });
+  });
+
   document.getElementById('notes-button').addEventListener('click', handleNotesToggle);
 
   document.getElementById('clear-button').addEventListener('click', handleClear);
@@ -44,13 +51,12 @@ function wireEvents() {
 
   document.querySelectorAll('.difficulty-button').forEach(button => {
   button.addEventListener('click', () => {
-    const difficulty = button.dataset.difficulty;
     hideDifficultyOverlay();
-    startGame(difficulty, selectedSize);
+    startGame(button.dataset.difficulty, selectedSize);
   });
   });
 
-  const celebrationBtn = document.getElementById('celebration-button');
+  const celebrationBtn = document.getElementById('celebration-new-game');
   if (celebrationBtn) {
   celebrationBtn.addEventListener('click', () => {
     hideCelebration();
@@ -70,14 +76,18 @@ function handleCellClick(event) {
 }
 
 function handleKeyDown(event) {
-  const key = event.key;
-  if (key >= '1' && key <= '9') {
-  event.preventDefault();
-  handleNumberInput(parseInt(key, 10));
-  return;
+  const state = getState();
+  if (state.completed) {
+    return;
   }
 
-  switch (key) {
+  if (event.key >= '1' && event.key <= '9') {
+    event.preventDefault();
+    handleNumberInput(parseInt(event.key, 10));
+    return;
+  }
+
+  switch (event.key) {
   case 'ArrowUp':
   event.preventDefault();
   moveSelection(-1, 0);

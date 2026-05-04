@@ -62,7 +62,7 @@ h1 {
   background: #d0e8ff;
 }
 
-.cell.cell-highlighted {
+.cell.cell-highlight {
   background: #ffb74d;
 }
 
@@ -296,7 +296,7 @@ h1 {
 
 .celebration-time {
   font-size: 24px;
-  color: #fff;
+  color: #ccc;
   font-variant-numeric: tabular-nums;
 }
 

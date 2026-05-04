@@ -1,8 +1,8 @@
-import {shuffle, random} from './utils.js';
+import {shuffle, randomInt} from './utils.js';
 import { countSolutions } from './solver.js';
 
 const MAX_RETRY_COUNT = 5;
-const MAX_SOLUTIONS = 2;
+const MAX_SOLUTIONS = 3;
 
 export const DIFFICULTY = {
   easy:   { maxCageSize: 4, maxSingleCells: 6, twoCellWeight: 5 },
@@ -34,8 +34,8 @@ export function generatePuzzle(size, difficulty = 'easy') {
 
   if (solutionCount <= MAX_SOLUTIONS && solutionCount > 0) {
     if (solutionCount < bestSolutionCount) {
-  bestPuzzle = { solution, cages };
-  bestSolutionCount = solutionCount;
+      bestSolutionCount = solutionCount;
+      bestPuzzle = { solution, cages };
     }
     continue;
   }
@@ -74,7 +74,7 @@ function generateLatinSquare(size) {
 }
 
 function partitionIntoCages(size, settings) {
-  const assigned = Array.from({ length: size }, () => Array(size).fill(false));
+  const assigned = Array.from({ length: size }, () => new Array(size).fill(false));
   const cages = [];
   let cageId = 0;
   const maxSingleCells = settings.maxSingleCells;
@@ -96,7 +96,7 @@ function partitionIntoCages(size, settings) {
   const maxCageSize = settings.maxCageSize;
   let cageSize = weightedCageSize(maxCageSize, singleCellCount, maxSingleCells, settings.twoCellWeight);
 
-  if(cageSize === 1 && singleCellCount >= maxSingleCells) {
+  if (cageSize === 1 && singleCellCount >= maxSingleCells) {
     cageSize = 2;
   }
 
@@ -117,7 +117,7 @@ function partitionIntoCages(size, settings) {
     singleCellCount++;
   }
   
-  cells.push({
+  cages.push({
     id: cageId++,
     cells,
     operation: null,
@@ -147,8 +147,8 @@ function mergeSingleCells(cages, maxSingleCells, size) {
 
   let merged = 0;
   for (const cage of singles) {
-  const currentSignleCount = cages.filter(c => c.cells.length === 1).length;
-  if (currentSignleCount <= maxSingleCells) {
+  const currentSingleCount = cages.filter(c => c.cells.length === 1).length;
+  if (currentSingleCount <= maxSingleCells) {
     break;
   }
   const cell = cage.cells[0];
@@ -167,10 +167,8 @@ function mergeSingleCells(cages, maxSingleCells, size) {
   }
   }
 
-  for (let i =  cages.length - 1; i >= 0; i--) {
-  if (cages[i].cells.length === 0) {
-    cages.splice(i, 1);
-  }
+  for (let i = cages.length - 1; i >= 0; i--) {
+    if (cages[i].cells.length === 0) cages.splice(i, 1);
   }
 }
 
