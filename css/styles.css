@@ -1,0 +1,318 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #fff;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding-top: 40px;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 500px;
+  width: 100%;
+  padding: 0 20px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+#game-grid {
+  display: grid;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1;
+  border: 3px solid #000;
+  user-select: none;
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.cell.border-top { border-top: 3px solid #000; }
+.cell.border-bottom { border-bottom: 3px solid #000; }
+.cell.border-left { border-left: 3px solid #000; }
+.cell.border-right { border-right: 3px solid #000; }
+
+.cell.cell-selected {
+  background: #d0e8ff;
+}
+
+.cell.cell-highlight {
+  background: #ffb74d;
+}
+
+.cell.cell-error {
+  background: #ef5350;
+  color: #fff;
+}
+
+.cage-label {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  color: #000;
+  pointer-events: none;
+}
+
+.cell-number {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1;
+  z-index: 1;
+}
+
+.cell-notes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  width: 100%;
+  height: 100%;
+  padding: 2px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.note-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #666;
+  line-height: 1;
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.difficulty-label {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
+  color: #555;
+}
+
+#timer-display {
+  font-variant-numeric: tabular-nums;
+}
+
+.size-selector,
+.difficulty-selector {
+  display: flex;
+  gap: 12px;
+}
+
+.size-button,
+.difficulty-button {
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: 700;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.size-button:hover,
+.difficulty-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.size-button:active,
+.difficulty-button:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.number-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.number-button {
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+  font-weight: 600;
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.1s;
+}
+
+.number-button:hover {
+  background: #f0f0f0;
+}
+
+.number-button:active {
+  background: #ddd;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-button {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.1s;
+}
+
+.action-button:hover {
+  background: #f0f0f0;
+}
+
+.action-button:active {
+  background: #ddd;
+}
+
+.action-button.active {
+  background: #000;
+  color: #fff;
+}
+
+.new-game-button {
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  border: 2px solid #000;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.new-game-button:hover {
+  background: #333;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.overlay-content h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.celebration-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 4px;
+}
+
+.celebration-time {
+  font-size: 24px;
+  color: #ccc;
+  font-variant-numeric: tabular-nums;
+}
+
+.celebration-button {
+  padding: 14px 40px;
+  font-size: 18px;
+  font-weight: 700;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: background 0.15s;
+}
+
+.celebration-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
