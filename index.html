@@ -1,66 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KenKen</title>
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ken-Ken</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-    <div class="game-container">
-        <h1 class="game-title">KenKen</h1>
-        
-        <div class="game-grid"></div>
-        
-        <div class="game-info">
-            <span class="difficulty-label" id="difficulty-label"></span>
-            <span id="timer-label">00:00</span>
-        </div>
+  <div class="game-container">
+  <h1>Ken-Ken</h1>
+  
+  <div id="game-grid"></div>
+  
+  <div class="game-info">
+      <span class="difficulty-label" id="difficulty-label"></span>
+      <span id="timer-display">00:00</span>
+  </div>
 
-        <div class="controls">
-            <div class="number-buttons" id="number-buttons"></div>
+  <div class="controls">
+      <div class="number-buttons" id="number-buttons"></div>
 
-            <div class="action-buttons">
-                <button class="action-button" id="nootes-button">Notes: OFF</button>
-                <button class="action-button" id="clear-button">X</button>
-                <button class="action-button" id="reset-button">Reset</button>
-            </div>
-        
-            <button class="new-game-button" id="new-game-button">New Game</button>
-        </div>
-    </div>
+      <div class="action-buttons">
+          <button class="action-button" id="notes-button">Notes: OFF</button>
+          <button class="action-button" id="clear-button">X</button>
+          <button class="action-button" id="reset-button">Reset</button>
+      </div>
+  
+      <button class="new-game-button" id="new-game-button">New Game</button>
+  </div>
+  </div>
 
-    <div class="overlay" id="size-overlay">
-        <div class="overlay-content">
-            <h2>Select Grid Size</h2>
-            <div class="size-selector">
-                <button class="size-button" data-size="4">4x4</button>
-                <button class="size-button" data-size="5">5x5</button>
-                <button class="size-button" data-size="6">6x6</button>
-                <button class="size-button" data-size="7">7x7</button>
-            </div>
-        </div>
-    </div>
+  <div class="overlay" id="size-overlay">
+  <div class="overlay-content">
+      <h2>Select Size</h2>
+      <div class="size-selector">
+          <button class="size-button" data-size="4">4x4</button>
+          <button class="size-button" data-size="5">5x5</button>
+          <button class="size-button" data-size="6">6x6</button>
+          <button class="size-button" data-size="7">7x7</button>
+      </div>
+  </div>
+  </div>
 
-    <div class="overlay" id="difficulty-overlay">
-        <div class="overlay-content">
-            <h2>Select Difficulty</h2>
-            <div class="difficulty-selector">
-                <button class="difficulty-button" data-difficulty="easy">Easy</button>
-                <button class="difficulty-button" data-difficulty="medium">Medium</button>
-                <button class="difficulty-button" data-difficulty="hard">Hard</button>
-            </div>
-        </div>
-    </div>
+  <div class="overlay" id="difficulty-overlay">
+  <div class="overlay-content">
+      <h2>Select Difficulty</h2>
+      <div class="difficulty-selector">
+          <button class="difficulty-button" data-difficulty="easy">Easy</button>
+          <button class="difficulty-button" data-difficulty="medium">Medium</button>
+          <button class="difficulty-button" data-difficulty="hard">Hard</button>
+      </div>
+  </div>
+  </div>
 
-    <div class="overlay" id="celebration">
-        <div class="overlay-content">
-            <div class="celebration-title">SOLVED!</div>
-            <div class="celebration-time">TIME 00:00</div>
-            <button class="celebration-button" id="celebration-button">New Game</button>
-        </div>
-    </div>
-    <script type="module" src="js/main.js"></script>
+  <div class="overlay" id="celebration">
+  <div class="overlay-content">
+      <div class="celebration-title">SOLVED!</div>
+      <div class="celebration-time">Time: 00:00</div>
+      <button class="celebration-button" id="celebration-new-game">New Game</button>
+  </div>
+  </div>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

@@ -35,27 +35,27 @@ function wireEvents() {
   document.getElementById('new-game-button').addEventListener('click', showSizeOverlay);
 
   document.querySelectorAll('.size-button').forEach(button => {
-    button.addEventListener('click', () => {
-      selectedSize = parseInt(button.dataset.size, 10);
-      hideSizeOverlay();
-      showDifficultyOverlay();
-    });
+  button.addEventListener('click', () => {
+    selectedSize = parseInt(button.dataset.size, 10);
+    hideSizeOverlay();
+    showDifficultyOverlay();
+  });
   });
 
   document.querySelectorAll('.difficulty-button').forEach(button => {
-    button.addEventListener('click', () => {
-      const difficulty = button.dataset.difficulty;
-      hideDifficultyOverlay();
-      startGame(difficulty, selectedSize);
-    });
+  button.addEventListener('click', () => {
+    const difficulty = button.dataset.difficulty;
+    hideDifficultyOverlay();
+    startGame(difficulty, selectedSize);
+  });
   });
 
   const celebrationBtn = document.getElementById('celebration-button');
   if (celebrationBtn) {
-    celebrationBtn.addEventListener('click', () => {
-      hideCelebration();
-      showSizeOverlay();
-    });
+  celebrationBtn.addEventListener('click', () => {
+    hideCelebration();
+    showSizeOverlay();
+  });
   }
 }
 
@@ -72,44 +72,44 @@ function handleCellClick(event) {
 function handleKeyDown(event) {
   const key = event.key;
   if (key >= '1' && key <= '9') {
-    event.preventDefault();
-    handleNumberInput(parseInt(key, 10));
-    return;
+  event.preventDefault();
+  handleNumberInput(parseInt(key, 10));
+  return;
   }
 
   switch (key) {
   case 'ArrowUp':
-    event.preventDefault();
-    moveSelection(-1, 0);
-    updateHighlights();
-    return;
+  event.preventDefault();
+  moveSelection(-1, 0);
+  updateHighlights();
+  return;
   case 'ArrowDown':
-    event.preventDefault();
-    moveSelection(1, 0);
-    updateHighlights();
-    return;
+  event.preventDefault();
+  moveSelection(1, 0);
+  updateHighlights();
+  return;
   case 'ArrowLeft':
-    event.preventDefault();
-    moveSelection(0, -1);
-    updateHighlights();
-    return;
+  event.preventDefault();
+  moveSelection(0, -1);
+  updateHighlights();
+  return;
   case 'ArrowRight':
-    event.preventDefault();
-    moveSelection(0, 1);
-    updateHighlights();
-    return;
+  event.preventDefault();
+  moveSelection(0, 1);
+  updateHighlights();
+  return;
   }
 
   if (event.key === 'n' || event.key === 'N') {
-    event.preventDefault();
-    handleNotesToggle();
-    return;
+  event.preventDefault();
+  handleNotesToggle();
+  return;
   }
 
   if (event.key === 'Backspace' || event.key === 'Delete') {
-    event.preventDefault();
-    handleClear();
-    return;
+  event.preventDefault();
+  handleClear();
+  return;
   }
 }
 
@@ -122,7 +122,7 @@ function handleNumberInput(num) {
   updateHighlights();
 
   if (state.completed) {
-    showCelebration();
+  showCelebration();
   }
 }
 
@@ -170,19 +170,19 @@ function startGame(difficulty, size) {
   updateTimer(0);
   updateNotesButton(false);
   document.getElementById('difficulty-label').textContent = 
-    `${size}x${size} • ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}`;
+  `${size}x${size} • ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}`;
 }
 
 function renderNumberButtons(size) {
   const container = document.getElementById('number-buttons');
   container.innerHTML = '';
   for (let i = 1; i <= size; i++) {
-    const button = document.createElement('button');
-    button.className = 'number-button';
-    button.dataset.number = i;
-    button.textContent = i;
-    button.addEventListener('click', () => handleNumberInput(i));
-    container.appendChild(button);
+  const button = document.createElement('button');
+  button.className = 'number-button';
+  button.dataset.number = i;
+  button.textContent = i;
+  button.addEventListener('click', () => handleNumberInput(i));
+  container.appendChild(button);
   }
 }
 
