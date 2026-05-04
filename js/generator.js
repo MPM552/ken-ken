@@ -51,7 +51,7 @@ export function generatePuzzle(size, difficulty = 'easy') {
 
 function generateLatinSquare(size) {
   const base = Array.from({ length: size }, (_, i) => i + 1);
-  return shuffle(base);
+  shuffle(base);
 
   const grid =[];
   for (let i = 0; i < size; i++) {
@@ -228,7 +228,7 @@ function assignOperationsAndTargets(cages, solution, size){
   if(values.length === 2) {
     const ops = getPossibleOps2(values[0], values[1]);
     const op = ops[randomInt(0, ops.length - 1)];
-    cage.operation = op.operation;
+    cage.operation = op;
     cage.target = computeTarget(values, op);
   } else {
     const op = Math.random() < 0.5 ? '+' : '*';

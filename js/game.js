@@ -112,10 +112,8 @@ export function resetBoard() {
 
   for (let r = 0; r < gameState.size; r++) {
   for (let c = 0; c < gameState.size; c++) {
-  if (!isGivenCell(r, c)) {
       gameState.board[r][c] = 0;
       gameState.notes[r][c] = [];
-  }
   }
   }
 }
@@ -161,7 +159,7 @@ export function findMatchingNumbers(row, col) {
     }
   }
   }
-  return matchingCages;
+  return matches;
 }
 
 export function checkWin() {

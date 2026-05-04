@@ -1,7 +1,7 @@
 export function countSolutions(cages, size, maxCount = 4) {
   const cageMap = new Map();
   for (const cage of cages) {
-  for (cell of cage.cells) {
+  for (const cell of cage.cells) {
     cageMap.set(`${cell.row},${cell.col}`, cage);
   }
   }
@@ -30,7 +30,7 @@ function solve(board, size, row, col, cageMap, maxCount, result) {
   if (!cage) return;
 
   for (let num = 1; num <= size; num++) {
-  if (!isValidPlacement(board, size, row, col, num, cageMap)) {
+  if (!isValid(board, size, row, col, num, cageMap)) {
     continue;
   }
   board[row][col] = num;

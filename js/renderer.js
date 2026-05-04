@@ -182,16 +182,16 @@ function buildCageLookup(state) {
 function applyBoarders(cellEl, row, col, cage, cageLookup, size) {
   const cageId = cage.id;
 
-  if (row === 0 || cageLookup[row - 1][col].id !== cage) {
+  if (row === 0 || cageLookup[row - 1][col].id !== cageId) {
   cellEl.classList.add('border-top');
   }
-  if (row === size - 1 || cageLookup[row + 1][col].id !== cage) {
+  if (row === size - 1 || cageLookup[row + 1][col].id !== cageId) {
   cellEl.classList.add('border-bottom');
   }
-  if (col === 0 || cageLookup[row][col - 1].id !== cage) {
+  if (col === 0 || cageLookup[row][col - 1].id !== cageId) {
   cellEl.classList.add('border-left');
   }
-  if (col === size - 1 || cageLookup[row][col + 1].id !== cage) {
+  if (col === size - 1 || cageLookup[row][col + 1].id !== cageId) {
   cellEl.classList.add('border-right');
   }
 }
