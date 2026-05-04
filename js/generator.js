@@ -45,7 +45,7 @@ export function generatePuzzle(size, difficulty = "easy") {
     const solution = generateLatinSquare(size);
     const cages = partitionIntoCages(size, settings);
     assignOperationsAndTargets(cages, solution, size);
-    bestPuzzle = { solution, cages };
+    bestPuzzle = { solution, cages, blind: true };
   }
 
   console.log(`Best puzzle found: ${bestSolutionCount} solutions`);

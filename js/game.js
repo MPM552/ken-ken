@@ -20,6 +20,7 @@ function createEmptyState() {
     timerInterval: null,
     started: false,
     completed: false,
+    blind: false,
   };
 }
 
@@ -32,10 +33,11 @@ export function newGame(difficulty, size) {
   if (difficulty) gameState.difficulty = difficulty;
   if (size) gameState.size = size;
   const gridSize = gameState.size;
-  const { solution, cages } = generatePuzzle(gridSize, gameState.difficulty);
+  const { solution, cages, blind = false } = generatePuzzle(gridSize, gameState.difficulty);
 
   gameState.solution = solution;
   gameState.cages = cages;
+  gameState.blind = blind;
   gameState.board = Array.from({ length: gridSize }, () =>
     new Array(gridSize).fill(0),
   );

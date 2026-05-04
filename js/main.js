@@ -203,8 +203,19 @@ function startGame(difficulty, size) {
   renderNumberButtons(size);
   updateTimer(0);
   updateNotesButton(false);
+  const state = getState();
   document.getElementById("difficulty-label").textContent =
     `${size}x${size} • ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}`;
+  const blindNotice = document.getElementById("blind-notice");
+  if (blindNotice) blindNotice.remove();
+  if (state.blind) {
+    const notice = document.createElement("div");
+    notice.id = "blind-notice";
+    notice.textContent = "⚠️ Puzzle quality not guaranteed — generator retries exhausted.";
+    notice.style.cssText =
+      "color: #b45309; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px; padding: 6px 12px; margin-top: 8px; font-size: 0.8rem; text-align: center;";
+    document.querySelector(".game-container").appendChild(notice);
+  }
 }
 
 function renderNumberButtons(size) {
