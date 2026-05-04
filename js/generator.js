@@ -1,7 +1,7 @@
 import { shuffle, randomInt } from "./utils.js";
 import { countSolutions } from "./solver.js";
 
-const MAX_RETRY_COUNT = 5;
+const MAX_RETRY_COUNT = 20;
 const MAX_SOLUTIONS = 3;
 
 export const DIFFICULTY = {
@@ -34,19 +34,20 @@ export function generatePuzzle(size, difficulty = "easy") {
       return { solution, cages };
     }
 
-    if (solutionCount <= MAX_SOLUTIONS && solutionCount > 0) {
-      if (solutionCount < bestSolutionCount) {
-        bestSolutionCount = solutionCount;
-        bestPuzzle = { solution, cages };
-      }
-      continue;
-    }
-
     if (solutionCount > 0 && solutionCount < bestSolutionCount) {
-      bestPuzzle = { solution, cages };
       bestSolutionCount = solutionCount;
+      bestPuzzle = { solution, cages };
     }
   }
+
+  // Guaranteed fallback: return something even if not uniquely solvable
+  if (!bestPuzzle) {
+    const solution = generateLatinSquare(size);
+    const cages = partitionIntoCages(size, settings);
+    assignOperationsAndTargets(cages, solution, size);
+    bestPuzzle = { solution, cages };
+  }
+
   console.log(`Best puzzle found: ${bestSolutionCount} solutions`);
   return bestPuzzle;
 }

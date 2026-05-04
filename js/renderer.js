@@ -80,7 +80,7 @@ function updateCellDisplay(row, col) {
     numEl.style.display = "none";
     notesEl.style.display = "";
     notesEl.innerHTML = "";
-    for (let i = 1; i <= notes.length; i++) {
+    for (let i = 1; i <= state.size; i++) {
       const noteElement = document.createElement("span");
       noteElement.className = "note-number";
       noteElement.textContent = notes.includes(i) ? i : "";
