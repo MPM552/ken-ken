@@ -20,6 +20,11 @@ import {
   hideCelebration,
 } from "./renderer.js";
 
+import {
+  saveHighScore,
+  getHighScore,
+} from "./highscore.js";
+
 let selectedSize = 6;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -154,7 +159,9 @@ function handleNumberInput(num) {
   updateHighlights();
 
   if (state.completed) {
-    showCelebration();
+    const previousRecord = getHighScore(state.size, state.difficulty);
+    const isNewRecord = saveHighScore(state.size, state.difficulty, state.timer);
+    showCelebration(isNewRecord, previousRecord);
   }
 }
 
