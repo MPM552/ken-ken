@@ -144,7 +144,7 @@ export function updateNotesButton(isActive) {
   btn.classList.toggle("active", isActive);
 }
 
-export function showCelebration() {
+export function showCelebration(isNewRecord = false, previousRecord = null) {
   const state = getState();
   const overlay = document.getElementById("celebration");
   if (!overlay) return;
@@ -155,6 +155,23 @@ export function showCelebration() {
     const secs = String(state.timer % 60).padStart(2, "0");
     timeEl.textContent = `Time: ${mins}:${secs}`;
   }
+
+  const recordEl = overlay.querySelector(".celebration-record");
+  if (recordEl) {
+    if (isNewRecord && previousRecord) {
+      const improvement = previousRecord.time - state.timer;
+      const improveMin = String(Math.floor(improvement / 60)).padStart(2, "0");
+      const improveSec = String(improvement % 60).padStart(2, "0");
+      recordEl.textContent = `🎉 NEW RECORD! 🎉 (${improveMin}:${improveSec} faster)`;
+      recordEl.style.display = "";
+    } else if (isNewRecord) {
+      recordEl.textContent = "🎉 NEW RECORD! 🎉";
+      recordEl.style.display = "";
+    } else {
+      recordEl.style.display = "none";
+    }
+  }
+
   overlay.classList.add("visible");
 }
 

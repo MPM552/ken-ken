@@ -300,6 +300,24 @@ h1 {
   font-variant-numeric: tabular-nums;
 }
 
+.celebration-record {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffd700;
+  letter-spacing: 2px;
+  margin-top: 12px;
+  animation: pulse-glow 1s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  }
+}
+
 .celebration-button {
   padding: 14px 40px;
   font-size: 18px;
